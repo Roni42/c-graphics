@@ -1,4 +1,4 @@
-/*  FILE NAME: 'MTH.H'
+/*  FILE NAME: 'mth.h'
  *  PROGRAMMER: Veronika Korneeva
  *  LAST UPDATE: 06.01.2020
  *  PURPOSE: Vector and matrix maths.
@@ -271,7 +271,7 @@ __inline MATR MatrMulMatr( MATR M1, MATR M2 )
 } /* End of 'MatrMulMatr' function */
 
 /* Creating unit matrix */
-__inline MATR MatrIdentity( VOID )
+__inline MATR MatrIdentity( void )
 {
  return UnitMatrix;
 }

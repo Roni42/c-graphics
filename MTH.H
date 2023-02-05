@@ -17,19 +17,19 @@
 #define D2R(A) ((A) * (PI / 180.0))
 #define Degree2Radian(A) D2R(A)
 
-/* DOUBLE */
-typedef double DBL;
+/* double */
+typedef double dbl;
 
 /* Vector in 3D space */
 typedef struct tagVEC
 {
- DBL X, Y, Z;
+ dbl X, Y, Z;
 } VEC;
 
 /* Matr in struct (4D max) */
 typedef struct tagMATR
 {
- DBL M[4][4];
+ dbl M[4][4];
 } MATR;
 
 /* Unit matrix */
@@ -50,7 +50,7 @@ static MATR UnitMatrix =
  ***/
 
 /* Set vector from coordinates */
-__inline VEC VecSet( DBL X, DBL Y, DBL Z )
+__inline VEC VecSet( dbl X, dbl Y, dbl Z )
 {
  VEC V;
  V.X = X;
@@ -72,13 +72,13 @@ __inline VEC VecSubVec( VEC V1, VEC V2 )
 } /* End of 'VecSubVec' function */
 
 /* Vector * const */
-__inline VEC VecMulNum( VEC V, DBL N )
+__inline VEC VecMulNum( VEC V, dbl N )
 {
   return VecSet(V.X * N, V.Y * N, V.Z * N);
 } /* End of 'VecSubVec' function */
 
 /* Vector / const */
-__inline VEC VecDivNum( VEC V, DBL N )
+__inline VEC VecDivNum( VEC V, dbl N )
 {
   return VecSet(V.X / N, V.Y / N, V.Z / N);
 } /* End of 'VecDivVec' function */
@@ -90,7 +90,7 @@ __inline VEC VecNeg( VEC V )
 } /* End of 'VecLen2' function */
 
 /* Dot poduct */
-__inline DBL VecDotVec( VEC V1, VEC V2 )
+__inline dbl VecDotVec( VEC V1, VEC V2 )
 {
   return (V1.X * V2.X + V1.Y * V2.Y + V1.Z * V2.Z);
 } /* End of 'VecDotVec' function */
@@ -105,13 +105,13 @@ __inline VEC VecCrossVec( VEC V1, VEC V2 )
 } /* End of 'VecCrossVec' function */
 
 /* Vector len ^2 */
-__inline DBL VecLen2( VEC V )
+__inline dbl VecLen2( VEC V )
 {
   return (V.X * V.X + V.Y * V.Y + V.Z * V.Z);
 } /* End of 'VecLen2' function */
 
 /* Vector len  */
-__inline DBL VecLen( VEC V )
+__inline dbl VecLen( VEC V )
 {
   return sqrt(V.X * V.X + V.Y * V.Y + V.Z * V.Z);
 } /* End of 'VecLen' function */
@@ -119,7 +119,7 @@ __inline DBL VecLen( VEC V )
 /* Normal of vector */
 __inline VEC VecNormalize( VEC V )
 {
-  DBL l;
+  dbl l;
   if (V.X == 0 && V.Y == 0 && V.Z == 0 || (l = VecLen2(V)) == 1)
     return V;
   l = sqrt(l);
@@ -286,14 +286,14 @@ __inline MATR MatrTranslate( VEC T )
 }
 
 /* Calculate matrix(3x3) determ */
-__inline DBL MatrDeterm3x3( DBL A11, DBL A12, DBL A13, DBL A21, DBL A22, DBL A23, DBL A31, DBL A32, DBL A33 )
+__inline dbl MatrDeterm3x3( dbl A11, dbl A12, dbl A13, dbl A21, dbl A22, dbl A23, dbl A31, dbl A32, dbl A33 )
 {
   return A11 * A22 * A33 - A11 * A23 * A32 - A12 * A21 * A33 +
     A12 * A23 * A31 + A13 * A21 * A32 - A13 * A22 * A31;
 } /* End of 'MatrDeterm3x3' function */
 
 /* Calculate matrix(4x4) determ */
-__inline DBL MatrDeterm( MATR M )
+__inline dbl MatrDeterm( MATR M )
 {
  return
   M.M[0][0] * MatrDeterm3x3(
@@ -325,9 +325,9 @@ __inline MATR MatrScale( VEC V )
 } /* End of 'MatrScale' function */
 
 /* Create matrix to rotate around X */
-__inline MATR MatrRotateX( DBL AngleInDegree )
+__inline MATR MatrRotateX( dbl AngleInDegree )
 {
-  DBL A = D2R(AngleInDegree), si = sin(A), co = cos(A);
+  dbl A = D2R(AngleInDegree), si = sin(A), co = cos(A);
   MATR M = UnitMatrix;
 
   M.M[1][1] = co;
@@ -338,9 +338,9 @@ __inline MATR MatrRotateX( DBL AngleInDegree )
 } /* End of 'MatrRotateX' function */
 
 /* Create matrix to rotate around Y */
-__inline MATR MatrRotateY( DBL AngleInDegree )
+__inline MATR MatrRotateY( dbl AngleInDegree )
 {
-  DBL A = D2R(AngleInDegree), si = sin(A), co = cos(A);
+  dbl A = D2R(AngleInDegree), si = sin(A), co = cos(A);
   MATR M = UnitMatrix;
 
   M.M[0][0] = co;
@@ -351,9 +351,9 @@ __inline MATR MatrRotateY( DBL AngleInDegree )
 } /* End of 'MatrRotateY' function */
 
 /* Create matrix to rotate around Z */
-__inline MATR MatrRotateZ( DBL AngleInDegree )
+__inline MATR MatrRotateZ( dbl AngleInDegree )
 {
-  DBL A = D2R(AngleInDegree), si = sin(A), co = cos(A);
+  dbl A = D2R(AngleInDegree), si = sin(A), co = cos(A);
   MATR M = UnitMatrix;
 
   M.M[0][1] = si;
@@ -366,11 +366,11 @@ __inline MATR MatrRotateZ( DBL AngleInDegree )
 /* Ortho matrix function.
  * ARGUMENTS:
  *   - viewer position, look-at point, approximate up direction:
- *       DBL Left, Right, Bottom, Top, Near, Far;
+ *       dbl Left, Right, Bottom, Top, Near, Far;
  * RETURNS:
  *   - (MATR) result matrix.
  */
-__inline MATR MatrOrtho( DBL Left, DBL Right, DBL Bottom, DBL Top, DBL Near, DBL Far )
+__inline MATR MatrOrtho( dbl Left, dbl Right, dbl Bottom, dbl Top, dbl Near, dbl Far )
 {
   MATR M = UnitMatrix;
 
@@ -385,9 +385,9 @@ __inline MATR MatrOrtho( DBL Left, DBL Right, DBL Bottom, DBL Top, DBL Near, DBL
 
 
 /* Create  matrix to rorate around vector R */
-__inline MATR MatrRotate( DBL AngleInDegree, VEC R )
+__inline MATR MatrRotate( dbl AngleInDegree, VEC R )
 {
-  DBL A = D2R(AngleInDegree), si = sin(A), co = cos(A);
+  dbl A = D2R(AngleInDegree), si = sin(A), co = cos(A);
   VEC V = VecNormalize(R);
   MATR M =
   {
